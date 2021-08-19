@@ -1,24 +1,36 @@
-Activate Python Virtual Environment
-c:\users\brend\appdata\local\programs\python\python39\python.exe -m pipenv shell
+# ArcGit
 
-Run
-python main.py
+ArcGit is a Version Control *helper library for ArcGIS Online content. ArcGit uses the ArcGIS REST API and ArcGIS API for Python. This is a helper library because it *helps developers manage versioning in ArcGIS Online, but is not a full version control library (like Git).
 
+## Installation
 
+Clone this repository.
+    git clone https://github.com/bren96/ArcGit.git
 
+Activate Python Virtual Environment (pipenv).
+    python -m pipenv shell
 
+Create AGOL_CONFIG.py in home folder.
+    agol_config = {
+        'orgUrl': '',
+        'user': '',
+        'password': '',
+        'token' : ''
+    }
 
+Run.
+    python main.py
 
-arcgit clone [itemeId] [type]
+## Usage
 
-    Creates a folder in the user's current directory, and pull the item's data
-    Creates a copy of the item in AGOL and stores it in user's AGOL home folder.
-    Creates a arcgit file that stores the itemId of the clone and original item
-    
-    cloneId : Id of the AGOL Item.
+### Clone
 
-    ex:
-    arcgit clone -c9b3dbb892442463ab065efcb96dcd81c -dashboard
+#### arcgit.clone_dashboard(itemID, *outputFolder)
+- Creates a folder in the user's current directory, and pull the item's data
+- Creates a copy of the item in AGOL and stores it in user's AGOL home folder.
+- Creates a arcgit file that stores the itemId of the clone and original item
+
+    arcgit.clone_dashboard(c9b3dbb892442463ab065efcb96dcd81c)
 
     dashboard folder structure
     Dashboard_{itemId}
@@ -32,25 +44,39 @@ arcgit clone [itemeId] [type]
                     Description.JSON
                     Data.JSON
 
+### Merge
+- Can only run if there is an arcgit file in the current directory.
+- If there are local changes that haven't been pushed to AGOL, FAIL (ask the user to first push there changes).
+- If there are no local changes that haven't been pushed to AGOL, PUSH local JSON to original item data
 
-arcgit push
+    arcgit.merge(folderName)
 
-    Can only run if there is an arcit file in the current directory.
-    Pushes changes to AGOL cloned items (aka push local changes to cloned item in AGOL)
+COMING SOON:
+
+### Push
+- Can only run if there is an arcit file in the current directory.
+- Pushes changes to AGOL cloned items (aka push local changes to cloned item in AGOL)
+
+### Pull
+- Can only run if there is an arcit file in the current directory.
+- Pull json data from AGOL cloned items (aka push AGOL changes to local directory).
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+TBD
 
 
-arcgit pull
-
-    Can only run if there is an arcit file in the current directory.
-    Pull json data from AGOL cloned items (aka push AGOL changes to local directory).
 
 
 
-arcgit merge
 
-    Can only run if there is an arcgit file in the current directory.
-    If there are local changes that haven't been pushed to AGOL, FAIL (ask the user to first push there changes).
-    If there are no local changes that haven't been pushed to AGOL, PUSH local JSON to original item data
+
+
+
+
+
 
 
 
