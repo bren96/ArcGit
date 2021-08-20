@@ -1,48 +1,96 @@
 # ArcGit
 
-ArcGit is a Version Control *helper library for ArcGIS Online content. ArcGit uses the ArcGIS REST API and ArcGIS API for Python. This is a helper library because it *helps developers manage versioning in ArcGIS Online, but is not a full version control library (like Git).
+Software is never written correctly the first time, and neither are services, maps, and apps in ArcGIS Online.
 
-## Installation
+ArcGit is a version control Python library for ArcGIS Online content. ArcGit uses the ArcGIS REST API and ArcGIS API for Python. This library can help developers manage versioning of content in ArcGIS Online for branching, testing and design iteration.
 
-Clone this repository.
-```
-git clone https://github.com/bren96/ArcGit.git
+Use cases:
+
+1. Test and Iterate AGOL hosted products across multiple users/teams.
+
+2. Merge and review changes to customer-facing AGOL services, maps, and apps without breaking active configurations.
+
+3. Edit the JSON of your AGOL content locally from your local code editor.
+
+4. Programmatically manage and make changes to versioned AGOL content.
+
+Imagine you have customers actively using a dashboard. You want to make changes or improvements to the dashboard, such as adding a new layer to the map, including more attributes in a popup, or trying out a new symbology.
+
+Sadly, you can't replace the web-map currently used in the dashboard without fully deleting all the configurations to the web-map (dashboard selectors, charts, indicators, etc.)
+
+Imagine if it was just as simple as:
+```python
+import arcgit
+
+clone = arcgit.clone(itemId)
+
+# make your changes -> push to clone in AGOL
+clone.push()
+
+# merge the changes to the original item
+clone.merge(itemId)
 ```
 
-Activate Python Virtual Environment (pipenv).
-```
-python -m pipenv shell
+# Installation
+
+Install to your local python environment:
+```python
+pip install arcgit
 ```
 
-Create AGOL_CONFIG.py in home folder.
-```
+In your project's root directory, add your AGOL login credentials to AGOL_CONFIG.py:
+```python
 agol_config = {
     'orgUrl': '',
-    'user': '',
+    'username': '',
     'password': '',
     'token' : ''
 }
 ```
 
-Run.
-```
-python main.py
-```
-
 ## Usage
+
+Dashboard Example:
+1. Clone a dashboard using it's itemId. This creates a folder locally called Dashboard-{itemId} containing json files for that AGOL item and a log tracking changes between the item and the clone.
+3. Push local changes to the cloneId for testing.
+4. Pull changes to sync your local directory.
+5. Repeat steps 2-4 until ready for merge.
+6. Merge changes from the clone to the original item. Optionally delete the clone after merging.
 
 ### Clone
 
-#### arcgit.clone_dashboard(itemID, *outputFolder)
-- Creates a folder in the user's current directory, and pull the item's data
-- Creates a copy of the item in AGOL and stores it in user's AGOL home folder.
-- Creates a arcgit file that stores the itemId of the clone and original item
+#### arcgit.clone(itemID, cloneId, itemType outputFolder)
 
-```
-arcgit.clone_dashboard(c9b3dbb892442463ab065efcb96dcd81c)
-```
+Clone an item in AGOL, and store a copy of the description.json and data.json in a local directory.
 
-Dashboard Folder Structure
+If in the clone's local directory, a clone object can be created by calling `argit.clone()`.
+
+To load an existing clone in AGOL, pass the clone's id to the cloneId argument.
+
+itemId
+- Id of the AGOL Item you wish to clone
+- String
+- Optional
+
+cloneId
+- Id of the cloned AGOL Item (if a clone already exists)
+- String
+- Optional
+
+itemType
+- Type of AGOL item (ex: 'dashboard', 'map', 'service'). This will change how the locally stored directory is structured. Read Item Folder Structure for more information.
+- String
+- Optional
+
+outputFolder
+- Path to output directory. If null, will default to current directory.
+- String
+- Optional
+
+### Item Folder Structure
+To make it easier to clone AGOL app item's, there are templates for different folder structures.
+
+#### Dashboard Folder Structure
 ```
 Dashboard_{itemId}
     Description.JSON
@@ -56,25 +104,38 @@ Dashboard_{itemId}
                 Data.JSON
 ```
 
-### Merge
-```
-arcgit.merge(folderName)
-```
-- Can only run if there is an arcgit file in the current directory.
-- If there are local changes that haven't been pushed to AGOL, FAIL (ask the user to first push there changes).
-- If there are no local changes that haven't been pushed to AGOL, PUSH local JSON to original item data
-
-
-### COMING SOON:
 
 ### Push
-- Can only run if there is an arcit file in the current directory.
-- Pushes changes to AGOL cloned items (aka push local changes to cloned item in AGOL)
+```python
+# pushing via clone class
+clone = arcgit.clone(itemId)
+clone.push()
+
+# if pushing form local clone directory
+arcgit.push()
+```
 
 
 ### Pull
-- Can only run if there is an arcit file in the current directory.
-- Pull json data from AGOL cloned items (aka push AGOL changes to local directory).
+```python
+# pulling via clone class
+clone = arcgit.clone(itemId)
+clone.pull()
+
+# if pulling from local clone directory
+arcgit.pull()
+```
+
+
+### Merge
+```python
+# merging via clone class
+clone = arcgit.clone(itemId)
+clone.merge()
+
+# if merging directly within AGOL
+arcgit.merge(itemId, cloneId)
+```
 
 
 ## Contributing
