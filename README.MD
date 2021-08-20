@@ -82,7 +82,10 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 
 ## License
-TBD
+This library uses the ArcGIS API for Python by ESRI. This project is not affiliated or supported by ESRI. No additional modifications have been made to ESRI's software. For more information, please refer to ESRI's [license information](https://pypi.org/project/arcgis/).
+
+Otherwise, feel free to do whatever you want with this code, but consider [buying me a cup of coffee](https://www.buymeacoffee.com/bren9966).
+
 
 
 # Resources:
