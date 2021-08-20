@@ -102,11 +102,13 @@ To make it easier to clone AGOL app item's, there are templates for different fo
 │   ├── Description.JSON
 │   ├── Data.JSON
 │   └── Maps
+|       ├── ...
 │       └── Map_{itemId}
 │           ├── Description.JSON
 │           ├── Data.JSON
-│           ├──Layers
-│               └──Layer_{itemId}
+│           └── Layers
+|               ├── ...
+│               └── Layer_{itemId}
 │                   ├── Description.JSON
 │                   └── Data.JSON
 ```
