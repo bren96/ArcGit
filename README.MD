@@ -1,6 +1,6 @@
 # ArcGit
 
-Software is never written correctly the first time, and neither are services, maps, and apps in ArcGIS Online.
+Software is never written correctly the first time, and neither are services, maps, and apps for ArcGIS Online.
 
 ArcGit is a version control Python library for ArcGIS Online content. ArcGit uses the ArcGIS REST API and ArcGIS API for Python. This library can help developers manage versioning of content in ArcGIS Online for branching, testing and design iteration.
 
@@ -10,13 +10,13 @@ Use cases:
 
 2. Merge and review changes to customer-facing AGOL services, maps, and apps without breaking active configurations.
 
-3. Edit the JSON of your AGOL content locally from your local code editor.
+3. Edit the JSON of your AGOL content locally from your favorite code editor.
 
-4. Programmatically manage and make changes to versioned AGOL content.
+4. Programmatically manage and apply changes to versioned AGOL content.
 
-Imagine you have customers actively using a dashboard. You want to make changes or improvements to the dashboard, such as adding a new layer to the map, including more attributes in a popup, or trying out a new symbology.
+Imagine you have customers actively using a dashboard. You want to make changes or improvements to the dashboard, such as adding a new layer to the map, including more attributes in a popup, or trying out a new layer symbology.
 
-Sadly, you can't replace the web-map currently used in the dashboard without fully deleting all the configurations to the web-map (dashboard selectors, charts, indicators, etc.)
+Sadly, you can't replace the web-map currently used in the dashboard without fully deleting all the configurations to the web-map (dashboard selectors, charts, indicators, etc.) -> :confounded:
 
 Imagine if it was just as simple as:
 ```python
@@ -51,11 +51,17 @@ agol_config = {
 ## Usage
 
 Dashboard Example:
+
 1. Clone a dashboard using it's itemId. This creates a folder locally called Dashboard-{itemId} containing json files for that AGOL item and a log tracking changes between the item and the clone.
-3. Push local changes to the cloneId for testing.
-4. Pull changes to sync your local directory.
-5. Repeat steps 2-4 until ready for merge.
-6. Merge changes from the clone to the original item. Optionally delete the clone after merging.
+
+2. Push local changes to the cloneId for testing.
+
+3. Pull changes to sync your local directory.
+
+4. Repeat steps 2 & 3 until ready for merge.
+
+5. Merge changes from the clone to the original item. Optionally delete the clone after merging.
+
 
 ### Clone
 
@@ -78,7 +84,7 @@ cloneId
 - Optional
 
 itemType
-- Type of AGOL item (ex: 'dashboard', 'map', 'service'). This will change how the locally stored directory is structured. Read Item Folder Structure for more information.
+- Type of AGOL item (ex: 'dashboard', 'map', 'service'). This will change how the locally stored directory is structured. Read [Item Folder Structure](#item-folder-structure) for more information.
 - String
 - Optional
 
@@ -92,16 +98,17 @@ To make it easier to clone AGOL app item's, there are templates for different fo
 
 #### Dashboard Folder Structure
 ```
-Dashboard_{itemId}
-    Description.JSON
-    Data.JSON
-    Maps
-        Map_{itemId}
-            Description.JSON
-            Data.JSON
-            Layer_{itemId}
-                Description.JSON
-                Data.JSON
+├── Dashboard_{itemId}
+│   ├── Description.JSON
+│   ├── Data.JSON
+│   └── Maps
+│       └── Map_{itemId}
+│           ├── Description.JSON
+│           ├── Data.JSON
+│           ├──Layers
+│               └──Layer_{itemId}
+│                   ├── Description.JSON
+│                   └── Data.JSON
 ```
 
 
@@ -143,7 +150,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 
 ## License
-This library uses the ArcGIS API for Python by ESRI. This project is not affiliated or supported by ESRI. No additional modifications have been made to ESRI's software. For more information, please refer to ESRI's [license information](https://pypi.org/project/arcgis/).
+This library uses the ArcGIS REST API and ArcGIS API for Python by ESRI. This project is not affiliated or directly supported by ESRI. No modifications have been made to ESRI's software. For more information, please refer to ESRI's [license information](https://pypi.org/project/arcgis/).
 
 Otherwise, feel free to do whatever you want with this code, but consider [buying me a cup of coffee](https://www.buymeacoffee.com/bren9966).
 
