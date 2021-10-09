@@ -1,3 +1,7 @@
+# ----------------------------
+# --- STILL IN DEVELOPMENT ---
+# ----------------------------
+
 # ArcGit
 
 Software is never written correctly the first time, and neither are services, maps, and apps for ArcGIS Online.
